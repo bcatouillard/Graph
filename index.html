@@ -19,17 +19,20 @@
                 <li><h1>Graphique</h1></li>
                 <li id="check">Poids Patient<input type="checkbox" ng-model="weight"/></li>
                 <li id="check">Tension<input type="checkbox" ng-model="tension"/></li>
-                <li id="info">Infos Patient</li>
+                <li id="fullname"></li>
             </ul>
         </div>
     
 
     <!-- Graphique -->
-        <div ng-show="weight">
+        <div class="graph" ng-show="weight">
+            <h1>Graphique du poids du patient</h1>
+            {{Details}}
             {{wght}}
         </div>
 
-        <div ng-show="tension">
+        <div class="graph" ng-show="tension">
+            <h1>Graphique de la tension du patient</h1>
             {{tsn}}
         </div>
 
@@ -42,7 +45,7 @@
         <script src="Scripts/Bootstrap/bootstrap.min.js"></script>
         <script src="Scripts/app/app.js"></script>
     <!--Service Angular-->
-
+        <script src="Scripts/app/Services/index.service.js"></script>
     <!--Fin-->
 
     <!--Directive Angular-->

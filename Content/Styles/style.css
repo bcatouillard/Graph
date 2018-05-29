@@ -20,7 +20,7 @@
     text-align: center;
 }
 
-#info {
+#fullname {
     float: right;
     padding-top: 20px;
     padding-right: 5px;
@@ -33,4 +33,9 @@
 
 #check input {
     margin-left: 10px;
+}
+
+.graph{
+    text-align: center;
+    vertical-align: middle;
 }
