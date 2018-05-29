@@ -1,20 +1,36 @@
 /* Style */
 
-nav{
+.nav{
     position: sticky;
     margin: 0;
     overflow: hidden;
+    background-color: #EFFBFB;
 }
 
-nav > ul{
+.nav > ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-nav > ul > li{
-    display: inline-block;
-    width : 80px;
-    
+.nav  ul  li, ul  li  h1 {
+    display: inline-table;
+    margin: 5px;
+    width : 90px;
     text-align: center;
+}
+
+#info {
+    float: right;
+    padding-top: 20px;
+    padding-right: 5px;
+}
+
+#check {
+    display: inline-table;
+    width: 125px;
+}
+
+#check input {
+    margin-left: 10px;
 }
