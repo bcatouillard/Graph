@@ -1,4 +1,4 @@
-﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope, $http) {
+﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope) {
 
     $(document).ready(function(){
         $.ajax("weight.json", {
