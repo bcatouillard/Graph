@@ -13,30 +13,34 @@
 </head>
 <body>
     
-    <div ng-controller="IndexController">
+    <div>
         <div class="nav">
             <ul>
                 <li><h1>Graphique</h1></li>
-                <li id="check">Poids Patient<input type="checkbox"/></li>
-                <li id="check">Tension<input type="checkbox"/></li>
+                <li id="check">Poids Patient<input type="checkbox" ng-model="weight"/></li>
+                <li id="check">Tension<input type="checkbox" ng-model="tension"/></li>
                 <li id="info">Infos Patient</li>
             </ul>
         </div>
-
-    </div>
+    
 
     <!-- Graphique -->
-    
-    
+        <div ng-show="weight">
+            {{wght}}
+        </div>
 
+        <div ng-show="tension">
+            {{tsn}}
+        </div>
 
+    </div>
     <!-- Fin -->
 
     <!--HERE-->
         <script src="Scripts/JQuery/jquery-1.9.1.js"></script>
         <script src="Scripts/Angular/angular.min.js"></script>
         <script src="Scripts/Bootstrap/bootstrap.min.js"></script>
-        <script src="Scripts/app/app.js"</script></script>
+        <script src="Scripts/app/app.js"></script>
     <!--Service Angular-->
 
     <!--Fin-->
