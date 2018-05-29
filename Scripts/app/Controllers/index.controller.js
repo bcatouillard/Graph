@@ -1,26 +1,30 @@
-﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope, IndexService) {
+﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope, $http) {
 
-    $scope.weight = false;
-       
     $(document).ready(function(){
-        $.getJSON('weight.json', function(data){
-            $('fullname').empty();
-            $.each(data.fullname, function(entryIndex, entry){
-                $scope.fullname = entry.FULLNAME;
-                
-                
-            });
+        $.ajax("weight.json", {
+            success: function(data){
+                for(var key in data){
+                    alert(data[key]);
+                }
+                $('fullname').html('<li id="fullname">""+data.fullname+""</li>');
+                alert(data);
+            }
         });
     });
-    
 
-    if(!$scope.weight){
-        $scope.wght = "HHHHHHH";
-    }
-    $scope.tension = false;
+    $(function(){
 
-    if(!$scope.tension){
-        $scope.tsn = "FFFFF";
-    }
-    
+        
+
+        $scope.weight = false;
+
+        if(!$scope.weight){
+        }
+
+        $scope.tension = false;
+
+        if(!$scope.tension){
+        }
+
+    });
 }]);
