@@ -1,7 +1,8 @@
-﻿<html lang="fr"  ng-app="app" ng-controller="IndexController">
+﻿<!DOCTYPE HTML>
+<html lang="fr"  ng-app="app" ng-controller="IndexController">
 <head>
     <meta charset="utf-8" />
-    <mata name="fragment" content="!" />
+    <meta name="fragment" content="!" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,7 +20,7 @@
                 <li><h1>Graphique</h1></li>
                 <li id="check">Poids Patient<input type="checkbox" ng-model="weight"/></li>
                 <li id="check">Tension<input type="checkbox" ng-model="tension"/></li>
-            <!--    <li id="fullname">{{fullname}}</li>-->
+                <li id="fullname">{{fullname}}</li>
             </ul>
         </div>
     
@@ -41,6 +42,7 @@
         <script src="Scripts/Angular/angular.min.js"></script>
         <script src="Scripts/Bootstrap/bootstrap.min.js"></script>
         <script src="Scripts/app/app.js"></script>
+        <script src="weight.json" type="text/javascript"></script>
     <!--Service Angular-->
         <script src="Scripts/app/Services/index.service.js"></script>
     <!--Fin-->
