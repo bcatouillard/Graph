@@ -1,4 +1,6 @@
-﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope) {
+﻿angular.module('app').controller("IndexController", ["$scope","$http", IndexController = function ($scope,$http) {
+
+    var weighthistory;
 
     function JSONFile(file, callback) {
         var request = new XMLHttpRequest();
@@ -11,10 +13,17 @@
         }
         request.send(null);
     }
+
+
     JSONFile("weight.json", function(text){
         var data = JSON.parse(text);
-        console.log(data);
+        weighthistory = data.WEIGHTHISTORY;
+        document.getElementById("FULLNAME").innerHTML = weighthistory.FULLNAME;
+    
     });
+
+
+    
 
     $scope.weight = false;
 
@@ -25,5 +34,5 @@
 
     if(!$scope.tension){
     }
-    
+
 }]);

@@ -20,10 +20,15 @@
     text-align: center;
 }
 
-#fullname {
+#FULLNAME {
     float: right;
     padding-top: 20px;
-    padding-right: 5px;
+    padding-right: 15px;
+    text-align: center;
+    white-space: nowrap;
+    display: inline-table;
+    margin: 5px;
+    width: 90px;
 }
 
 #check {
