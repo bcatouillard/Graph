@@ -25,6 +25,23 @@
 
         labels = labels.reverse();
 
+        // var jour = new Array();
+
+        // for(var y=0; y <= labels.length-1; y++){
+        //     jour[y] = labels[y].substring(0,2);
+        // }
+
+        // for(var x=0 ; x <= jour.length-1 ; x++){
+        //     var sous = jour[x+1] - jour[x];
+        //     if(sous>0){
+                
+        //     }
+        // }
+
+        // console.log(jour);
+
+       
+
         var data = weighthistory.WEIGHTLIST.map(function(e){return e.VALUE});
 
         var ctx = document.getElementById("graphique").getContext('2d');
