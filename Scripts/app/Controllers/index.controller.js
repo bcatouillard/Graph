@@ -65,6 +65,47 @@
         }
 
         var myChart = new Chart(ctx, config);
+
+
+        var ctx1 = document.getElementById("tension").getContext('2d');
+
+        var config1 = {
+            type: 'line',
+            data: {
+               labels : labels,
+               datasets: [{
+                   data : data,
+                   borderColor: '#1302FB',
+                   fill: false,
+                   lineTension: 0,
+                   spanGaps: false
+               }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel:{
+                            display: true,
+                            labelString: 'Tension',
+                            fontsize: 50
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel:{
+                            display: true,
+                            labelString: 'Temps',
+                            fontsize: 50
+                        }
+                    }]
+                }
+            }
+        }
+
+        var myChart1 = new Chart(ctx1, config1);
+
     });
 
 
