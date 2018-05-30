@@ -69,12 +69,16 @@
 
         var ctx1 = document.getElementById("tension").getContext('2d');
 
+        var labels1 = weighthistory.BLOODPRESSURELIST.map(function(e){return e.TIME});
+
+        var data1 = weighthistory.BLOODPRESSURELIST.map(function(e){return e.VALUE});
+
         var config1 = {
             type: 'line',
             data: {
-               labels : labels,
+               labels : labels1,
                datasets: [{
-                   data : data,
+                   data : data1,
                    borderColor: '#1302FB',
                    fill: false,
                    lineTension: 0,
