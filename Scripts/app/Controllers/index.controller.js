@@ -27,7 +27,7 @@
    
         var data = weighthistory.WEIGHTLIST.map(function(e){return e.VALUE});
 
-        var ctx = document.getElementById("graphique").getContext('2d');
+        var ctx = document.getElementById("weight").getContext('2d');
 
         var config = {
             type: 'line',
