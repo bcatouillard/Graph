@@ -56,6 +56,6 @@
 
     $scope.weight = false;
 
-
+    $scope.tension = false;
 
 }]);
