@@ -28,6 +28,7 @@
     <!-- Graphique -->
         <div class="graph" ng-show="weight">
             <h1>Graphique du poids du patient</h1>
+            <canvas id="graphique" width="1500" height="250"></canvas>
         </div>
 
         <div class="graph" ng-show="tension">
@@ -43,6 +44,7 @@
         <script src="Scripts/Bootstrap/bootstrap.min.js"></script>
         <script src="Scripts/app/app.js"></script>
         <script src="weight.json" type="text/javascript"></script>
+        <script src="Scripts/Charts.js/Chart.min.js"></script>
     <!--Service Angular-->
         <script src="Scripts/app/Services/index.service.js"></script>
     <!--Fin-->

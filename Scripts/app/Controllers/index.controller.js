@@ -20,6 +20,35 @@
         weighthistory = data.WEIGHTHISTORY;
         document.getElementById("FULLNAME").innerHTML = weighthistory.FULLNAME;
     
+
+        var labels = weighthistory.WEIGHTLIST.map(function(e){return e.DATE});
+
+        labels = labels.reverse();
+
+        var data = weighthistory.WEIGHTLIST.map(function(e){return e.VALUE});
+
+        var ctx = document.getElementById("graphique").getContext('2d');
+
+        var config = {
+            type: 'line',
+            data: {
+               labels : labels,
+               datasets: [{
+                   label: 'Poids',
+                   data : data,
+                   borderColor: '#FC0101',
+                   fill: false,
+                   lineTension: 0
+               }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+            }
+        }
+
+        var myChart = new Chart(ctx, config);
     });
 
 
@@ -27,12 +56,6 @@
 
     $scope.weight = false;
 
-    if(!$scope.weight){
-    }
 
-    $scope.tension = false;
-
-    if(!$scope.tension){
-    }
 
 }]);
