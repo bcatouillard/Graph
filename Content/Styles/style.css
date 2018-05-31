@@ -1,19 +1,17 @@
 /* Style */
 
-.nav{
+nav{
     position: sticky;
     margin: 0;
     overflow: hidden;
     background-color: #EFFBFB;
 }
 
-.nav > ul{
+nav > ul{
     list-style-type: none;
-    margin: 0;
-    padding: 0;
 }
 
-.nav  ul  li, ul  li  h1 {
+nav img,  ul  li, ul  li  h1 {
     display: inline-table;
     margin: 5px;
     width : 90px;
@@ -21,10 +19,7 @@
 }
 
 #FULLNAME {
-    float: right;
-    padding-top: 20px;
-    padding-right: 15px;
-    text-align: center;
+    padding-top: 12px;
     white-space: nowrap;
     display: inline-table;
     margin: 5px;
@@ -43,4 +38,8 @@
 .graph{
     text-align: center;
     vertical-align: middle;
+}
+
+nav h1 {
+    font-size: 25px;
 }
