@@ -53,7 +53,6 @@
                         var string = add + "-" + mois[x] + "-" + annee[x];
                     }
                 }
-                console.log(string);
                 if(annee[x+1] - annee[x] > 0 ){
                     labels.splice(x+compt,0,string);
                     data.splice(x+compt,0,"NaN");
