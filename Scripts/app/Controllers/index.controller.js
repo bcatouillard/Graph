@@ -1,4 +1,4 @@
-﻿angular.module('app').controller("IndexController", ["$scope","$http", IndexController = function ($scope,$http) {
+﻿angular.module('app').controller("IndexController", ["$scope", IndexController = function ($scope) {
 
     var weighthistory;
 
@@ -26,32 +26,48 @@
         var annee = new Array();
 
         for(var x=0 ; x <= labels.length-1; x++){
-            jour[x] = labels[x].substring(0,2);
-            mois[x] = labels[x].substring(3,5);
-            annee[x] = labels[x].substring(6,10);
+            jour[x] = parseInt(labels[x].substring(0,2),10);
+            mois[x] = parseInt(labels[x].substring(3,5),10);
+            annee[x] = parseInt(labels[x].substring(6,10),10);
         }
         
+        var compt = 1;
 
         for(var x=0; x<= labels.length-1; x++){
             var sous = jour[x+1] - jour[x];
-            if(sous==1 || sous<0 || sous>1){
-                var add = String(parseInt(jour[x],10)+1);
+            if(sous<0 || sous>1){
+                var add = String(jour[x]+1);
                 if(parseInt(add,10)<10){
-                    var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+                    if(mois[x]<10){
+                        var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+                    }
+                    else{
+                        var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+                    }
                 }
                 else{
-                    var string = add + "-" + mois[x] + "-" + annee[x];
-                }
-                var trtmnt = parseInt(labels[x+1].substring(0,2),10);
-                var trtmnt1 = parseInt(labels[x+1].substring(3,5),10);
-                var trtmnt2 = parseInt(labels[x+1].substring(6,10),10);
-                if(trtmnt>add){ 
-                    if(trtmnt1 == mois[x]){
-                        if(trtmnt2 == annee[x]){
-                            labels.splice(x+1,0,string);
-                            data.splice(x+1,0,"NaN");
-                        }
+                    if(mois[x]<10){
+                        var string = add + "-" + "0"+mois[x] + "-" + annee[x];
                     }
+                    else{
+                        var string = add + "-" + mois[x] + "-" + annee[x];
+                    }
+                }
+                console.log(string);
+                if(annee[x+1] - annee[x] > 0 ){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,"NaN");
+                    compt++;
+                }
+                else if(mois[x+1] - mois[x] > 0){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,"NaN");
+                    compt++;
+                }
+                else if(jour[x+1] - jour[x] > 0){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,"NaN");
+                    compt++;
                 }
             }
         }
