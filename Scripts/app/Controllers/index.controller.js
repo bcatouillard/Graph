@@ -2,17 +2,9 @@
 
     var weighthistory;
 
-    function JSONFile(file, callback) {
-        var request = new XMLHttpRequest();
-        request.overrideMimeType("application/json");
-        request.open("GET", file, true);
-        request.onreadystatechange = function() {
-            if (request.readyState === 4 && request.status == "200") {
-                callback(request.responseText);
-            }
-        }
-        request.send(null);
-    }
+    $scope.weight = false;
+
+    $scope.tension = false;
 
 
     JSONFile("weight.json", function(text){
@@ -40,20 +32,26 @@
         }
         
 
-        for(var x=0; x<= jour.length-1; x++){
+        for(var x=0; x<= labels.length-1; x++){
             var sous = jour[x+1] - jour[x];
-            if(sous>1 || sous<0){
-                var add = parseInt(jour[x],10)+1;
-                if(add<10){
-                    var string = String("0"+add) + "-" + mois[x] + "-" + annee[x];
+            if(sous==1 || sous<0 || sous>1){
+                var add = String(parseInt(jour[x],10)+1);
+                if(parseInt(add,10)<10){
+                    var string = "0"+add + "-" + mois[x] + "-" + annee[x];
                 }
                 else{
-                    var string = String(add) + "-" + mois[x] + "-" + annee[x];
+                    var string = add + "-" + mois[x] + "-" + annee[x];
                 }
-                if(add>jour[x]){
-                        labels.splice(x+1,0,string);
-                        data.splice(x+1,0,"NaN");
-                    
+                var trtmnt = parseInt(labels[x+1].substring(0,2),10);
+                var trtmnt1 = parseInt(labels[x+1].substring(3,5),10);
+                var trtmnt2 = parseInt(labels[x+1].substring(6,10),10);
+                if(trtmnt>add){ 
+                    if(trtmnt1 == mois[x]){
+                        if(trtmnt2 == annee[x]){
+                            labels.splice(x+1,0,string);
+                            data.splice(x+1,0,"NaN");
+                        }
+                    }
                 }
             }
         }
@@ -150,8 +148,19 @@
 
     
 
-    $scope.weight = false;
 
-    $scope.tension = false;
+
+    function JSONFile(file, callback) {
+        var request = new XMLHttpRequest();
+        request.overrideMimeType("application/json");
+        request.open("GET", file, true);
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status == "200") {
+                callback(request.responseText);
+            }
+        }
+        request.send(null);
+    }
+
 
 }]);
