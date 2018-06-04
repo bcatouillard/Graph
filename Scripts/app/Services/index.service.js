@@ -1,4 +1,4 @@
-angular.module('app').factory('IndexService', ["$http", function ($http)
+angular.module('app').factory('IndexService', [function ()
 {
        return{ 
             Traitement: function(){
@@ -11,7 +11,6 @@ angular.module('app').factory('IndexService', ["$http", function ($http)
                         callback(request.responseText);
                         var data = JSON.parse(request.responseText);
                         var weighthistory = data.WEIGHTHISTORY;
-                        console.log(data);
                         return weighthistory;
                     }
                 }

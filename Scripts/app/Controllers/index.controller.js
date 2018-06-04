@@ -1,14 +1,12 @@
 ﻿angular.module('app').controller('IndexController', ['$scope','IndexService', function ($scope, IndexService) {
 
-    var weighthistory;
+    var weighthistory= [];
 
     weighthistory = IndexService.Traitement();
     
-    
+    console.log(weighthistory);
 
     FusionCharts.ready(function(){
-
-        setTimeout(function(){console.log(weighthistory)},3000);
 
         $scope.Categorie = [{
             id : "Poids",
@@ -17,9 +15,6 @@
             id : "Tension",
             name : 'Tension'
         }];
-
-        
-        
 
             // var MyChart = new FusionCharts({
             //     type: 'line',
