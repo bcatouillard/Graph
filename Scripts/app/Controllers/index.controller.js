@@ -1,8 +1,14 @@
 ﻿angular.module('app').controller('IndexController', ['$scope','IndexService', function ($scope, IndexService) {
 
+    var weighthistory;
+
+    weighthistory = IndexService.Traitement();
+    
+    
+
     FusionCharts.ready(function(){
 
-        var label, data, weighthistory;
+        setTimeout(function(){console.log(weighthistory)},3000);
 
         $scope.Categorie = [{
             id : "Poids",
@@ -12,17 +18,18 @@
             name : 'Tension'
         }];
 
-        var weighthistory = IndexService.Traitement();
+        
+        
 
-            var MyChart = new FusionCharts({
-                type: 'line',
-                renderAt: 'graph',
-                xAxisName: 'Temps',
-                width: 1500,
-                height: 250,
-                dataFormat: 'json',
-                dataSource: weighthistory.Poids
-            });
+            // var MyChart = new FusionCharts({
+            //     type: 'line',
+            //     renderAt: 'graph',
+            //     xAxisName: 'Temps',
+            //     width: 1500,
+            //     height: 250,
+            //     dataFormat: 'json',
+            //     dataSource: IndexService.Traitement().Poids
+            // });
 
             var categorie = $scope.selectCategorie;
 
