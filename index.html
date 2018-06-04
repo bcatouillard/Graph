@@ -13,49 +13,44 @@
    
 </head>
 <body ng-cloak>
-    <section ng-controller="IndexController">
-           
-                    <nav class="navbar navbar-default">
-                        <div class="navbar-header">
-                            <ul>
-                                <img src="../Content/Images/Logo/logo-ahnac-sticky.png" class="pull-left" />
-                                <li><h1>Graphique</h1></li>
-                                <li id="check">Poids Patient<input type="checkbox" ng-model="weight"/></li>
-                                <li id="check">Tension<input type="checkbox" ng-model="tension"/></li>
-                                <li class="pull-right" id="FULLNAME"></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </header> 
-    
+    <div ng-controller="IndexController">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <ul>
+                    <img src="../Content/Images/Logo/logo-ahnac-sticky.png" class="pull-left" />
+                    <li><h1>Graphique</h1></li>
+                    <select ng-model="selectCategorie" ng-options="categorie.id as categorie.name for categorie in Categorie" ng-change="GetValue()">
+                        <option value="">Choisissez</option>
+                    </select>
+                </ul>
+            </div>
+        </nav>
+
     <!-- Graphique -->
-        <div class="graph" ng-show="weight">
-            <h1>Graphique du poids du patient</h1>
-            <canvas id="weight" width="1500" height="250"></canvas>
-
-                    <h1>Graphique du poids du patient</h1>
-                    <div id="chartContainer"></div>
-
-        <div class="graph" ng-show="tension">
-            <h1>Graphique de la tension du patient</h1>
-            <canvas id="tension" width="1500" height="250"></canvas>
+        <div align="center" ng-if="selectCategorie !== categorie.id">
+            <h1></h1>
+            <div id="graph"></div>
         </div>
+
+    </div>
     <!-- Fin -->
-    </section>
+
     <!--HERE-->
         <script src="Scripts/JQuery/jquery-1.9.1.js"></script>
+        <script src="Scripts/Angular/FusionCharts/js/fusioncharts.js"></script>
         <script src="Scripts/Angular/angular.min.js"></script>
         <script src="Scripts/Bootstrap/bootstrap.min.js"></script>
         <script src="Scripts/app/app.js"></script>
-        <script src="Scripts/Charts.js/Chart.js"></script>
-        <script src="Scripts/Angular/angular-fusioncharts.js"></script>
-        <script src="Scripts/Angular/FusionCharts/js/fusioncharts.js"></script>
+
+        <script src="Scripts/Angular/angular-fusioncharts.js"></script>  
         <script src="Scripts/Angular/FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
     <!--Fin-->
 
     <!--Controller Angular-->
         <script src="Scripts/app/Controllers/index.controller.js"></script>
     <!--Fin-->
-        <script src="Scripts/graph.js"></script> 
+    
+        
+        <!-- <script src="Scripts/graph.js"></script>  -->
 </body>
 </html>

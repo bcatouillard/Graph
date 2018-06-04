@@ -18,7 +18,7 @@ nav img,  ul  li, ul  li  h1 {
     text-align: center;
 }
 
-#FULLNAME {
+.pull-right {
     padding-top: 12px;
     white-space: nowrap;
     display: inline-table;
@@ -26,13 +26,13 @@ nav img,  ul  li, ul  li  h1 {
     width: 90px;
 }
 
-#check {
+#weight1, #tension1 {
     display: inline-table;
     width: 125px;
 }
 
-#check input {
-    margin-left: 10px;
+#weight1 input, #tension1 input {
+    margin-left: 12px;
 }
 
 .graph{

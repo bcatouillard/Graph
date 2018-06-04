@@ -1,17 +1,13 @@
 JSONFile("weight.json", function(text){
     var data = JSON.parse(text);
-    weighthistory = data.WEIGHTHISTORY;
-    document.getElementById("FULLNAME").innerHTML = weighthistory.FULLNAME;
-
-
+    weighthistory = data.HISTORY;
+    document.getElementById("FULLNAME").innerHTML = history.FULLNAME;
+    
     var labels = weighthistory.WEIGHTLIST.map(function(e){return e.DATE});
-
-    labels = labels.reverse();
-
     var data = weighthistory.WEIGHTLIST.map(function(e){return e.VALUE});
-
+    labels = labels.reverse();
     data = data.reverse();
-
+    
     var jour = new Array();
     var mois = new Array();
     var annee = new Array();
@@ -61,12 +57,8 @@ JSONFile("weight.json", function(text){
             }
         }
     }
-
-
-
-
-
-    var ctx = document.getElementById("weight").getContext('2d');
+    
+    var ctx = document.getElementById("graph_").getContext('2d');
 
     var config = {
         type: 'line',
@@ -88,7 +80,7 @@ JSONFile("weight.json", function(text){
                 yAxes: [{
                     scaleLabel:{
                         display: true,
-                        labelString: 'Poids',
+                        labelString: label,
                         fontsize: 50
                     }
                 }],
@@ -101,58 +93,11 @@ JSONFile("weight.json", function(text){
                 }]
             }
         }
-    }
-
+    };
     var myChart = new Chart(ctx, config);
 
 
-    var ctx1 = document.getElementById("tension").getContext('2d');
-
-    // var labels1 = weighthistory.BLOODPRESSURELIST.map(function(e){return e.TIME});
-
-    // var data1 = weighthistory.BLOODPRESSURELIST.map(function(e){return e.VALUE});
-
-    // var config1 = {
-    //     type: 'line',
-    //     data: {
-    //        labels : labels1,
-    //        datasets: [{
-    //            data : data1,
-    //            borderColor: '#1302FB',
-    //            fill: false,
-    //            lineTension: 0,
-    //            spanGaps: false
-    //        }]
-    //     },
-    //     options: {
-    //         legend: {
-    //             display: false
-    //         },
-    //         scales: {
-    //             yAxes: [{
-    //                 scaleLabel:{
-    //                     display: true,
-    //                     labelString: 'Tension',
-    //                     fontsize: 50
-    //                 }
-    //             }],
-    //             xAxes: [{
-    //                 scaleLabel:{
-    //                     display: true,
-    //                     labelString: 'Temps',
-    //                     fontsize: 50
-    //                 }
-    //             }]
-    //         }
-    //     }
-    // }
-
-    // var myChart1 = new Chart(ctx1, config1);
-
 });
-
-
-
 
 
 
@@ -167,3 +112,6 @@ function JSONFile(file, callback) {
     }
     request.send(null);
 }
+
+
+   

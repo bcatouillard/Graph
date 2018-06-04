@@ -5,7 +5,7 @@
 		"FULLNAME": "AHNTEST, ANGELATU",
 		"BIRTHDATE": "15-12-1845",
 		"AGE": "",
-		"WEIGHTLIST": [{
+		"Poids": [{
 			"VALUE": "152",
 			"DATE": "09-02-2017",
 			"ENCOUNTERID": 13433296,
@@ -166,6 +166,7 @@
 			"IEP": "201461480",
 			"UF": "",
 			"ENCOUNTERDATE": ""
-		}]
+		}],
+		"Tension": [{}]
 	}
 }
