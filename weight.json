@@ -7,11 +7,8 @@
 		"AGE": "",
 		"Poids": [{
 			"VALUE": "152",
-			"DATE": "09-02-2017",
-			"ENCOUNTERID": 13433296,
-			"IEP": "201461480",
-			"UF": "",
-			"ENCOUNTERDATE": ""
+			"LABEL": "09-02-2017"
+			
 		}, {
 			"VALUE": "152",
 			"DATE": "09-02-2017",
@@ -166,7 +163,6 @@
 			"IEP": "201461480",
 			"UF": "",
 			"ENCOUNTERDATE": ""
-		}],
-		"Tension": [{}]
+		}]
 	}
 }

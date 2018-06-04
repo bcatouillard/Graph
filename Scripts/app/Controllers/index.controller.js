@@ -1,50 +1,41 @@
-﻿angular.module('app').controller("IndexController", ["$scope","$http", IndexController = function ($scope,$http) {
+﻿angular.module('app').controller('IndexController', ['$scope','IndexService', function ($scope, IndexService) {
 
-    var label, data, weighthistory;
+    FusionCharts.ready(function(){
 
-    $scope.cat = "";
+        var label, data, weighthistory;
 
-    $scope.Categorie = [{
-        id : 1,
-        name : 'Poids'
-    },{
-        id : 2,
-        name : 'Tension'
-    }];
 
-    JSONFile("weight.json", function(text){
-        var data = JSON.parse(text);
-        weighthistory = data.WEIGHTHISTORY;
-    
-        var MyChart = new FusionCharts({});
-        
-        $scope.GetValue = function(categorie){
-            var categorieID = $scope.selectCategorie;
-            var categorieName = $.grep($scope.Categorie, function(categorie){
-                label = categorieName;
-                $scope.cat = label;
-                data = [$scope.selectCategorie]; 
-                MyChart = ({
-                    yAxisName: label,
-                    type: 'line',
-                    renderAt: 'graph',
-                    width: 1500,
-                    height: 250,
-                    dataFormat: 'json',
+
+        $scope.Categorie = [{
+            id : "Poids",
+            name : 'Poids'
+        },{
+            id : "Tension",
+            name : 'Tension'
+        }];
+
+        var weighthistory = IndexService.Traitement();
+
+            var MyChart = new FusionCharts({
+                type: 'line',
+                renderAt: 'graph',
+                xAxisName: 'Temps',
+                width: 1500,
+                height: 250,
+                dataFormat: 'json',
+                dataSource: weighthistory.Poids
+            });
+
+            var categorie = $scope.selectCategorie;
+
+            $scope.GetValue = function(categorie){
+                var categorieID = categorie;
+                var categorieName = $.grep(categorieID, function(categorie){
+                    label = categorieName;
+                    data = weighthistory.categorieName; 
                 });
-            })
-        };
-    });
-
-    function JSONFile(file, callback) {
-        var request = new XMLHttpRequest();
-        request.overrideMimeType("application/json");
-        request.open("GET", file, true);
-        request.onreadystatechange = function() {
-            if (request.readyState === 4 && request.status == "200") {
-                callback(request.responseText);
+                console.log(categorie);
             }
-        }
-        request.send(null);
-    }
+            // categorie.addEventListener("GetValue", $scope.GetValue());
+        });
 }]);
