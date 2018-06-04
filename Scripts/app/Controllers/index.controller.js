@@ -4,8 +4,6 @@
 
         var label, data, weighthistory;
 
-
-
         $scope.Categorie = [{
             id : "Poids",
             name : 'Poids'
