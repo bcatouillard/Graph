@@ -1,11 +1,11 @@
 {
-	"WEIGHTHISTORY": {
+	"VALUEHISTORY": {
 		"PERSONID": 7690966,
 		"IPP": "10184273",
 		"FULLNAME": "AHNTEST, ANGELATU",
 		"BIRTHDATE": "15-12-1845",
 		"AGE": "",
-		"WEIGHTLIST": [{
+		"VALUELIST": [{
 			"VALUE": "152",
 			"DATE": "09-02-2017",
 			"ENCOUNTERID" : 13433296,
@@ -166,10 +166,6 @@
 			"IEP": "201461480",
 			"UF": "",
 			"ENCOUNTERDATE": ""
-		}],
-		"TENSIONLIST": [{
-			"VALUE" : "12",
-			"DATE" : "07-02-2017"
 		}]
 	}
 }
