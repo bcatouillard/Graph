@@ -19,33 +19,35 @@
                 <ul>
                     <img src="../Content/Images/Logo/logo-ahnac-sticky.png" class="pull-left" />
                     <li><h1>Graphique</h1></li>
-                    <select ng-model="selectCategorie" ng-options="categorie.name for categorie in Categorie" ng-change="GetValue()">
+                    <select ng-model="selectCategorie" ng-options="c.id as c.name for c in Categorie" ng-change="GetValue()">
                         <option value="">Choisissez</option>
                     </select>
+                    <li class="pull-right">{{fullname}}</li>
                 </ul>
             </div>
         </nav>
 
     <!-- Graphique -->
-        <div align="center" ng-if="selectCategorie !== categorie.id">
-            <h1>f</h1>
-            <div id="graph"></div>
-        </div>
-
-    </div>
+        <div align="center" ng-show="selectCategorie">
+            <h1>Courbe de {{label}} du patient</h1>
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+                chart-options="options" width="1500" height="250" chart-dataset-override="datasetOverride" chart-get-colors="colors">
+            </canvas>
+        </div>    
     <!-- Fin -->
+    </div>
+
+
+
 
     <!--HERE-->
         <script src="Scripts/JQuery/jquery-1.9.1.js"></script>
-        <script src="Scripts/Angular/FusionCharts/js/fusioncharts.js"></script>
-        <script src="Scripts/Angular/angular.js"></script>
+        <script src="Scripts/Charts.js/Chart.js"></script>
+        <script src="Scripts/Angular/angular.min.js"></script>
+        <script src="Scripts/Angular/Charts/angular-chart.js"></script>
         <script src="Scripts/app/app.js"></script>
         <script src="Scripts/Bootstrap/bootstrap.js"></script>
         <script src="Scripts/Angular/Route/angular-route.js"></script>
-        <script src="Scripts/Angular/angular-fusioncharts.js"></script>  
-        <script src="Scripts/Angular/FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
-    <!--Fin-->
-
     <!--Service Angular-->
         <script src="Scripts/app/Services/index.service.js"></script>
 

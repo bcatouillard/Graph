@@ -1,21 +1,9 @@
-angular.module('app').factory('IndexService', [function ()
+angular.module('app').factory('IndexService', ["$http", function ($http)
 {
-       return{ 
-            Traitement: function(){
-                var callback = (function(text){});
-                var request = new XMLHttpRequest();
-                request.overrideMimeType("application/json");
-                request.open("GET", "weight.json", true);
-                request.onreadystatechange = function() {
-                    if (request.readyState === 4 && request.status == "200") {
-                        callback(request.responseText);
-                        var data = JSON.parse(request.responseText);
-                        var weighthistory = data.WEIGHTHISTORY;
-                        return weighthistory;
-                    }
-                }
-                request.send(null);
-            }
+    return{ 
+        Traitement: function(url){
+            return $http.get(url)
+        }
     }
     return {
         JSON : Traitement
