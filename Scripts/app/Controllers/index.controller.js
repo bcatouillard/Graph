@@ -7,12 +7,10 @@
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        type : 'VALUE',
         url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
-        type : 'VALUE',
         url : 'tension.json'
     }];
     $scope.GetValue = function(categorie){   
@@ -49,7 +47,7 @@
                 var categorieName = $filter('filter')($scope.Categorie, function(d){return d.id == categorieID});
                 label = categorieName[0].name;
                 $scope.label = label;
-                data = categorieName[0].type+"LIST";
+                data = "VALUELIST";
 
                 var labels = valuehistory[data].map(function(e){return e.DATE});
                 var data = valuehistory[data].map(function(e){return e.VALUE});
