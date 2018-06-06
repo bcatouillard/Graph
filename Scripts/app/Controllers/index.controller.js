@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('IndexController', ['$scope','IndexService','$filter', function ($scope, IndexService, $filter) {
+﻿angular.module('app').controller('IndexController', ['$scope','$filter', function ($scope, $filter) {
 
     var valuehistory = [];
     var data;
@@ -18,7 +18,7 @@
             var url = $filter('filter')($scope.Categorie, function(d){return d.id == $scope.selectCategorie});
             url = url[0].url;
 
-            var oRequest = new XMLHttpRequest();
+            var oRequest = new XMLCclRequest();
             oRequest.onreadystatechange = function () {
                 if (oRequest.readyState == 4 && oRequest.status == 200) {
                     $scope.$apply(function () {

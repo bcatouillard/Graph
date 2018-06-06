@@ -1,1 +1,1 @@
-﻿var app = angular.module('app', ["chart.js", "ngRoute"]);
+﻿var app = angular.module('app', ["chart.js"]);
