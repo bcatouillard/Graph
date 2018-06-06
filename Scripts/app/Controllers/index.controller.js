@@ -18,7 +18,7 @@
             var url = $filter('filter')($scope.Categorie, function(d){return d.id == $scope.selectCategorie});
             url = url[0].url;
 
-            var oRequest = new XMLCclRequest();
+            var oRequest = new XMLHttpRequest();
             oRequest.onreadystatechange = function () {
                 if (oRequest.readyState == 4 && oRequest.status == 200) {
                     $scope.$apply(function () {
