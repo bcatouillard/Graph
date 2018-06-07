@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <ul>
+            <img src="../Content/Images/Logo/logo-ahnac-sticky.png" class="pull-left" />
+            <li><h1>Graphique</h1></li>
+            <select ng-model="selectCategorie" ng-options="c.id as c.name for c in Categorie" ng-change="GetValue()">
+                <option value="">Choisissez</option>
+            </select>
+            <li class="pull-right">{{fullname}}</li>
+        </ul>
+    </div>
+</nav>
+</div>
+<!-- Graphique -->
+<div align="center" ng-show="selectCategorie">
+    <h1>Courbe de {{label}} du patient</h1>
+    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+        chart-options="options" width="1500" height="250" chart-dataset-override="datasetOverride" chart-get-colors="colors">
+    </canvas>
+</div>   

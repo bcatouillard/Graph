@@ -1,8 +1,10 @@
-﻿angular.module('app').controller('IndexController', ['$scope','$filter', function ($scope, $filter) {
+﻿angular.module('app').controller('IndexController', ['$scope','$filter', '$routeParams','$location', function ($scope, $filter, $routeParams, $location) {
 
     var valuehistory = [];
     var data;
     var label;
+
+    var id = $routeParams.id;
 
     $scope.Categorie = [{
         id : 1,
@@ -36,7 +38,7 @@
                 }
             };
 
-            var param = "^MINE^,^16230337^,^9163812^,^29492698^,^"+"^,^0^";
+            var param = "^MINE^,"+id;
             oRequest.open('GET', url);
             oRequest.send(param); 
 
