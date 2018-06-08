@@ -19,10 +19,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     }];
 
 
-    $scope.GetValue = function(){   
-   
-
-
+     
     $scope.GetValue = function(){ 
         $('#test').empty();
         
@@ -73,12 +70,12 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             
             oRequest.open('GET', url);
             oRequest.send(param); 
-        }
+        
     }; // END GetValue
 
 
     function DrawCharts(){
-        $('#test').append("achtung" + JSON.stringify(valuehistory));
+        
         $scope.fullname = valuehistory.FULLNAME;
         var categorieID =  $scope.selectCategorie;
         var categorieName = $filter('filter')($scope.Categorie, function(d){return d.id == categorieID});
