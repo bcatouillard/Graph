@@ -112,12 +112,45 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 data[x] = parseInt(data[x]);
             }
 
+            var lgt = labels.length-1;
+            console.log(lgt);
+
             $scope.obj = {
                 type: "line",
                 series: [
                     { "values": data}      
                 ],
+                crosshairX:{
+                    lineColor: "#565656",
+                    lineStyle: "dashed",
+                    lineWidth: 2,
+                    alpha : 0.5,
+                    plotLabel:{
+                         backgroundColor : "#ffffff",
+                        borderColor : "#d2d2d2",
+                        borderRadius : "5px",
+                        bold : true,
+                        fontSize : "12px",
+                        fontColor : "#111",
+                        shadow : true,
+                        shadowDistance : 2,
+                        shadowAlpha : 0.4
+                    },
+                    scaleLabel:{ 
+                        bold : true,
+                        backgroundColor : "#787878",
+                        borderRadius : 3,
+                        fontColor : "#eaeaea",
+                        fontSize : "12px",
+                        callout : true,
+                        paddingTop : 2
+                    },
+                    marker:{
+                      visible: false 
+                    }
+                },
                 id:"chart",
+                "max-items" : lgt,
                 scaleX: {
                     label: {
                         text: 'Temps'
