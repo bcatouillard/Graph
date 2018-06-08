@@ -31,7 +31,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             url = url[0].url;
 
             var oRequest = new XMLHttpRequest();
-            // var oRequest = new XMLCclRequest();
+            var oRequest = new XMLCclRequest();
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
