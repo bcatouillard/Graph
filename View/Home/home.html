@@ -6,7 +6,7 @@
             <select ng-model="selectCategorie" ng-options="c.id as c.name for c in Categorie" ng-change="GetValue()">
                 <option value="">Choisissez</option>
             </select>
-            <li class="pull-right">{{fullname}}</li>
+            <li>{{fullname}}</li>
         </ul>
     </div>
 </nav>
@@ -14,7 +14,6 @@
 <!-- Graphique -->
 <div align="center" ng-show="selectCategorie">
     <h1>Courbe de {{label}} du patient</h1>
-    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-        chart-options="options" width="1500" height="250" chart-dataset-override="datasetOverride" chart-get-colors="colors">
-    </canvas>
+    <div zingchart id="chart"  zc-values="data" zc-json="obj" zc-width="1500" zc-height="250">
+    </div>
 </div>   

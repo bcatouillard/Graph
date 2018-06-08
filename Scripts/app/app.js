@@ -1,1 +1,1 @@
-﻿var app = angular.module('app', ["ngRoute", "chart.js"]);
+var app = angular.module('app', ["ngRoute", "zingchart-angularjs"]);
