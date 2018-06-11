@@ -125,13 +125,69 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 }
             }
             if(data[x] !== null){
-                 data[x] = parseInt(data[x]);
+                data[x] = parseInt(data[x]);
             }
         }
-
         
+        for(var x = 0; x<=labels.length-1; x++){ // Retrait des même clés.
+            if(labels[x] == labels[x+1]){
+                console.log(labels[x]);
+                labels.splice(x,1);
+                data.splice(x,1);
+            } 
+        }
+            
+            // for(var x=0 ; x <= labels.length-1; x++){
+        //     jour[x] = parseInt(labels[x].substring(0,2),10);
+        //     mois[x] = parseInt(labels[x].substring(3,5),10);
+        //     annee[x] = parseInt(labels[x].substring(6,10),10);
+        // }
 
-        var lgt = labels.length-1;
+        // var compt = 1;
+
+        // for(var x=0; x<=labels.length-1;x++){ //Ajout des jours 
+        //     var sous = jour[x+1] - jour[x];
+        //     if(sous > 1){
+        //         for(var y=1; y <= sous; y++){
+        //             var add = jour[x]+y;
+        //             if(parseInt(add,10)<10){
+        //                 if(mois[x]<10){
+        //                     var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+        //                 }
+        //                 else{
+        //                      var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+        //                 }
+        //             }else{
+        //                 if(mois[x]<10){
+        //                     var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+        //                 }else{
+        //                     var string = add + "-" + mois[x] + "-" + annee[x];
+        //                 }
+        //             }
+        //             if(annee[x+1] - annee[x] > 0 ){
+        //                 labels.splice(x+compt,0,string);
+        //                 data.splice(x+compt,0,null);
+        //                 compt++;
+        //             }
+        //             else if(mois[x+1] - mois[x] > 0){
+        //                 labels.splice(x+compt,0,string);
+        //                 data.splice(x+compt,0,null);
+        //                 compt++;
+        //             }
+        //             else if(jour[x+1] - jour[x] > 0){
+        //                 labels.splice(x+compt,0,string);
+        //                 data.splice(x+compt,0,null);
+        //                 compt++;
+        //             }
+        //         }
+        //     }
+        //     if(mois[x+1] - mois[x] < 0){
+                
+        //     }
+        // }
+
+        console.log(labels);
+        console.log(data);
 
         $scope.obj = {
             type: "line",
