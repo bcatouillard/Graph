@@ -1,4 +1,4 @@
-angular.module('app').controller('IndexController', ['$scope','$filter', '$routeParams', function ($scope, $filter, $routeParams) {
+angular.module('app').controller('IndexController', ['$scope','$filter', '$routeParams','$http', function ($scope, $filter, $routeParams,$http) {
 
     var valuehistory = [];
     var data;
@@ -19,10 +19,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     }];
 
 
-    $scope.GetValue = function(){   
-   
-
-
+     
     $scope.GetValue = function(){ 
         $('#test').empty();
         
@@ -31,61 +28,50 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             url = url[0].url;
 
             var oRequest = new XMLHttpRequest();
-            var oRequest = new XMLCclRequest();
+            // var oRequest = new XMLCclRequest();
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
                         if( oRequest.status == 200) {
-                            $scope.$apply(function () {
-                            
-                            valuehistory = JSON.parse(oRequest.responseText).VALUEHISTORY;
-                            DrawCharts();
-                            
-                            $scope.error = false;
-                            $scope.loader = false;
-                        });
-                        }else if(oRequest.status == 500) {
-                            $scope.$apply(function () {
-                            $scope.loader = false;
-                            $scope.error = true;
-                             });
-                        } else {
-
-                            // classic Ajax call
-                            $.ajax({
-                                'url': url,
-                                dataType: 'json' 
-                            }).done(function(data) {
-                                valuehistory = data.VALUEHISTORY;
-                                DrawCharts();
+                            $scope.$apply(function () {                     
+                                valuehistory = JSON.parse(oRequest.responseText).VALUEHISTORY;
+                                DrawCharts();                      
                                 $scope.error = false;
                                 $scope.loader = false;
                             });
-                        
+                        }else if(oRequest.status == 500) {
+                            $scope.$apply(function () {
+                                $scope.loader = false;
+                                $scope.error = true;
+                            });
+                        } else {
+                            // classic Ajax call
+                            $http.get(url)
+                                .then(function(data) {
+                                    valuehistory = data.VALUEHISTORY;
+                                    DrawCharts();
+                                    $scope.error = false;
+                                    $scope.loader = false;
+                                });    
                             $scope.error = true;
-                            //alert(JSON.stringify(oRequest));
                         }
-                }
-
-            };
-        }
-            var param = "^MINE^,"+id;
-            
+                    }
+            }; 
+            var param = "^MINE^,"+id;       
             oRequest.open('GET', url);
             oRequest.send(param); 
         }
     }; // END GetValue
 
-
     function DrawCharts(){
-        $('#test').append("achtung" + JSON.stringify(valuehistory));
+        
         $scope.fullname = valuehistory.FULLNAME;
         var categorieID =  $scope.selectCategorie;
         var categorieName = $filter('filter')($scope.Categorie, function(d){return d.id == categorieID});
         label = categorieName[0].name;
         $scope.label = label;
         data = "VALUELIST";
-
+        
         var labels = valuehistory[data].map(function(e){return e.DATE});
         var data = valuehistory[data].map(function(e){return e.VALUE});
 
@@ -115,27 +101,35 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     else{
                          var string = "0"+add + "-" + mois[x] + "-" + annee[x];
                     }
-                    if(annee[x+1] - annee[x] > 0 ){
-                        labels.splice(x+compt,0,string);
-                        data.splice(x+compt,0,null);
-                        compt++;
+                }else{
+                    if(mois[x]<10){
+                        var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+                    }else{
+                        var string = add + "-" + mois[x] + "-" + annee[x];
                     }
-                    else if(mois[x+1] - mois[x] > 0){
-                        labels.splice(x+compt,0,string);
-                        data.splice(x+compt,0,null);
-                        compt++;
-                    }
-                    else if(jour[x+1] - jour[x] > 0){
-                        labels.splice(x+compt,0,string);
-                        data.splice(x+compt,0,null);
-                        compt++;
-                    }
+                }
+                if(annee[x+1] - annee[x] > 0 ){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,null);
+                    compt++;
+                }
+                else if(mois[x+1] - mois[x] > 0){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,null);
+                    compt++;
+                }
+                else if(jour[x+1] - jour[x] > 0){
+                    labels.splice(x+compt,0,string);
+                    data.splice(x+compt,0,null);
+                    compt++;
                 }
             }
             if(data[x] !== null){
                  data[x] = parseInt(data[x]);
             }
         }
+
+        
 
         var lgt = labels.length-1;
 
@@ -172,11 +166,10 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 paddingTop : 2
                 },
                 marker:{
-                    visible: false 
+                    visible: true 
                 }
             },
             id:"chart",
-            "max-items" : lgt,
             scaleX: {
                 label: {
                     text: 'Temps'
@@ -189,5 +182,5 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 }
             }
         };
-        }; // END Drawcharts   
+    }; // END Drawcharts   
 }]);
