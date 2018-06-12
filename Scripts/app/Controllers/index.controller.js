@@ -21,7 +21,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
 
      
     $scope.GetValue = function(){ 
-        $('#test').empty();
         
         if($scope.selectCategorie !== null){
             var url = $filter('filter')($scope.Categorie, function(d){return d.id == $scope.selectCategorie});
