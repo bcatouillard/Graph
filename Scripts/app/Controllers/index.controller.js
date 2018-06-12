@@ -276,6 +276,34 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                             }
                         }
                     }
+                    // if(ad == 12) {
+                    //     ad = 1;
+                    //     if(ad == mois[x+1]){
+                    //         for(var y=1; y<jour[x+1];y++){
+                    //              var add = String(y);
+                    //             if(parseInt(add,10)<10){
+                    //                 var string = "0"+add + "-" + ad + "-" + annee[x];
+                    //             }else{
+                    //                 var string = add + "-" + ad + "-" + annee[x];
+                    //             }
+                    //             if(annee[x+1] - annee[x] > 0 ){
+                    //                 labels.splice(x+compt,0,string);
+                    //                 data.splice(x+compt,0,null);
+                    //                 compt++;
+                    //             }
+                    //             else if(mois[x+1] - mois[x] > 0){
+                    //                 labels.splice(x+compt,0,string);
+                    //                 data.splice(x+compt,0,null);
+                    //                 compt++;
+                    //             }
+                    //             else if(jour[x+1] - jour[x] > 0){
+                    //                 labels.splice(x+compt,0,string);
+                    //                 data.splice(x+compt,0,null);
+                    //                 compt++;
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 }
             }
         }
@@ -290,6 +318,9 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                   "text" : label
                 }      
             ],
+            plot: {
+                animation: {}
+            },
             crosshairX:{
                 lineColor: "#565656",
                 lineStyle: "dashed",
