@@ -159,6 +159,24 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     sequence: "ANIMATION_BY_NODE"
                 }
             },
+            labels: [
+                {
+                    id: 'zoom-out-to-start',
+                    text: 'Réinitialiser Zoom',
+                    backgroundColor:'#c3c3c3',
+                    x: '100%',
+                    y:5,
+                    offsetX: -120,
+                    padding:10,
+                    cursor: 'pointer',
+                    visible: false, // hide label by default
+                    flat:false, // makes label clickable
+                    borderRadius: 5,
+                    hoverState: {
+                      fontColor: '#424242',
+                      border: '1px solid black'
+                }
+            }],
             crosshairX:{
                 lineColor: "#565656",
                 lineStyle: "dashed",
@@ -202,8 +220,9 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     visible: true
                 },
                 "items-overlap": true,
+                step: 'day',
                 transform:{
-                    step: '604800000',
+                    step: 'day',
                     type: "date",
                     all: "%d-%m-%Y"
                 }
@@ -215,5 +234,33 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 }
             },
         };
+
+        zingchart.bind('chart', 'label_click', function(e) {
+            if (e.labelid === 'zoom-out-to-start') {
+              zingchart.exec('chart', 'viewall');
+            }
+          });
+          zingchart.bind('chart', 'zoom', function(e) {
+            console.log(e)
+            // hide zoom button
+            if (e.action && e.action === 'viewall') {
+              zingchart.exec('chart', 'updateobject', {
+                type: 'label',
+                data: {
+                  id: 'zoom-out-to-start',
+                  visible: false
+                }
+              });
+            } else {
+              zingchart.exec('chart', 'updateobject', {
+                type: 'label',
+                data: {
+                  id: 'zoom-out-to-start',
+                  visible: true
+                }
+              });
+            }
+          });
+
     }; // END Drawcharts   
 }]);
