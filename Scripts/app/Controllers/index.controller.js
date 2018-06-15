@@ -70,6 +70,9 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         label = categorieName[0].name;
         $scope.label = categorieName[0].name.toLowerCase();
         data = "VALUELIST";
+
+        param = $scope.Params;
+        console.log(param);
         
         var encounter = valuehistory[data].map(function(e){return e.ENCOUNTERID});
         var labels = valuehistory[data].map(function(e){return e.DATE});
@@ -90,51 +93,49 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         }
 
         var compt = 1;
-        var tab = [0];
 
         for(var x=0; x<= labels.length-1; x++){ // Séparation des séjours
-            var sous = jour[x+1] - jour[x];
-            if(sous<0 || sous>1){
-                var add = String(jour[x]+1);
-                if(parseInt(add,10)<10){
-                    if(mois[x]<10){
-                        var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
-                    }
-                    else{
-                         var string = "0"+add + "-" + mois[x] + "-" + annee[x];
-                    }
-                }else{
-                    if(mois[x]<10){
-                        var string = add + "-" + "0"+mois[x] + "-" + annee[x];
-                    }else{
-                        var string = add + "-" + mois[x] + "-" + annee[x];
-                    }
-                }
-                if(annee[x+1] - annee[x] > 0 ){
-                    labels.splice(x+compt,0,string);
-                    data.splice(x+compt,0,null);
-                    compt++;
-                }
-                else if(mois[x+1] - mois[x] > 0){
-                    labels.splice(x+compt,0,string);
-                    data.splice(x+compt,0,null);
-                    compt++;
-                }
-                else if(jour[x+1] - jour[x] > 0){
-                    labels.splice(x+compt,0,string);
-                    data.splice(x+compt,0,null);
-                    compt++;
+            if(encounter[x] == encounter[x+1]){
+                var sous = jour[x+1] - jour[x];
+                if(sous < param && sous > 1){
+                    for(var y=1; y<sous;y++){
+                        var add = String(jour[x]+y);
+                        if(parseInt(add,10)<10){
+                            if(mois[x]<10){
+                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }
+                            else{
+                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }else{
+                            if(mois[x]<10){
+                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }else{
+                                var string = add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }
+                        if(annee[x+1] - annee[x] > 0 ){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(mois[x+1] - mois[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(jour[x+1] - jour[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                    } 
                 }
             }
             if(data[x] !== null){
                 data[x] = parseInt(data[x]);
-                tab[x] = x;
-
             }
         }
-
-        console.log(tab);
-        console.log(data);
 
         for(var x=0 ; x <= labels.length-1; x++){
             jour[x] = parseInt(labels[x].substring(0,2),10);
@@ -142,19 +143,11 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             annee[x] = parseInt(labels[x].substring(6,10),10);
         }
 
-        for(var x=0; x<=labels.length-1;x++){
-            labels[x] = mois[x]+"-"+jour[x]+"-"+annee[x]
-        }
-
-        for(var x=0 ; x<= labels.length-1;x++){
-            labels[x] = Date.parse(labels[x]);
-        }
-
-
-        var lg = labels.length-1;
+        console.log(labels);
+        console.log(data);
 
         $scope.obj = { // Paramètre du graphique
-            "type": "line",
+            "type": "scatter",
             "series": [
                 { "values": data,
                   "text" : label
@@ -162,11 +155,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             ],
             "utc" : true,
             "timezone": 2,
-            "plot": {
-                "aspect": "segmented",
-                "exact":true,
-                "smart-sampling":true
-            },
             "labels": [
                 {
                     "id": 'zoom-out-to-start',
@@ -216,13 +204,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             },
             "id":"chart",
             "scaleX": {
-                "max-items": lg,
-                "item-overlap": true,
-                "markers":{
-                    "type": 'line',
-                    'value-range' : true,
-                    'range': null
-                },
                 "guide":{
                     "visible": true
                 },
@@ -240,9 +221,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 "item": {
                     "font-angle": -15             
                 },
-                "items-overlap": true,
                 "transform":{
-                    "step": 'day',
                     "type": "date",
                     "all": "%d-%m-%Y"
                 }
