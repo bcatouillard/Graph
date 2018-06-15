@@ -71,8 +71,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         $scope.label = categorieName[0].name.toLowerCase();
         data = "VALUELIST";
 
-        param = $scope.Params;
-        console.log(param);
+        param = 10;
         
         var encounter = valuehistory[data].map(function(e){return e.ENCOUNTERID});
         var labels = valuehistory[data].map(function(e){return e.DATE});
@@ -131,6 +130,74 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         }
                     } 
                 }
+                else if(sous < 0){
+                    for(var y = 1; y <= 2; y++){
+                        var add = String(jour[x]+y);
+                        if(parseInt(add,10)<10){
+                            if(mois[x]<10){
+                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }
+                            else{
+                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }else{
+                            if(mois[x]<10){
+                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }else{
+                                var string = add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }
+                        if(annee[x+1] - annee[x] > 0 ){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(mois[x+1] - mois[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(jour[x+1] - jour[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                    }
+                }
+                else if(sous > param){
+                    for(var y = 1; y <= 2; y++){
+                        var add = String(jour[x]+y);
+                        if(parseInt(add,10)<10){
+                            if(mois[x]<10){
+                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }
+                            else{
+                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }else{
+                            if(mois[x]<10){
+                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+                            }else{
+                                var string = add + "-" + mois[x] + "-" + annee[x];
+                            }
+                        }
+                        if(annee[x+1] - annee[x] > 0 ){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(mois[x+1] - mois[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                        else if(jour[x+1] - jour[x] > 0){
+                            labels.splice(x+compt,0,string);
+                            data.splice(x+compt,0,null);
+                            compt++;
+                        }
+                    }
+                }
             }
             if(data[x] !== null){
                 data[x] = parseInt(data[x]);
@@ -142,9 +209,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             mois[x] = parseInt(labels[x].substring(3,5),10);
             annee[x] = parseInt(labels[x].substring(6,10),10);
         }
-
-        console.log(labels);
-        console.log(data);
 
         $scope.obj = { // Paramètre du graphique
             "type": "scatter",
@@ -202,7 +266,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     "visible": true 
                 }
             },
-            "id":"chart",
             "scaleX": {
                 "guide":{
                     "visible": true
@@ -235,7 +298,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 "label": {
                     "text": label
                 }
-            },
+            }
         };
 
         zingchart.bind('chart', 'label_click', function(e) {
@@ -244,14 +307,12 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             }
           });
           zingchart.bind('chart', 'zoom', function(e) {
-            console.log(e)
-            // hide zoom button
             if (e.action && e.action === 'viewall') {
               zingchart.exec('chart', 'updateobject', {
                 type: 'label',
                 data: {
                   id: 'zoom-out-to-start',
-                  visible: false
+                  visible: true
                 }
               });
             } else {
@@ -263,7 +324,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 }
               });
             }
-          });
-
-    }; // END Drawcharts   
+          });           
+    }; // END Drawcharts
 }]);
