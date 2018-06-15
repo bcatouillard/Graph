@@ -324,6 +324,81 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 }
               });
             }
-          });           
+          });
+
+          zingchart.render({ 
+            id: 'chart',
+            data: $scope.obj,
+            events : {
+              complete : function() {
+                 createGroups();
+              }
+            }
+        });
+
+        function createGroups(){
+        
+            var oPlotArea = zingchart.exec('chart', 'getobjectinfo', {
+                object : 'plotarea'
+            });
+    
+            var node = [0];
+            for(var x=0;x<=data.length-1;x++){
+                if(data[x] !== null && encounter[x] == encounter[x+1]){
+                    node[x] = x;
+                }
+            }
+
+            var tempo = [node[0],node[node.length-1]];
+
+            var aLabels = [{
+                nodes: tempo,
+                data:{
+                    text: encounter[0]
+                }
+            }];
+            
+            var aLabelsData = [];
+
+            for (var l=0;l<aLabels.length;l++) { 
+                var oNodeStart = zingchart.exec('chart', 'getobjectinfo', {
+                    object : 'node',
+                    plotindex : 0,
+                    nodeindex : aLabels[l].nodes[0]
+                });
+                var oNodeEnd = zingchart.exec('chart', 'getobjectinfo', {
+                    object : 'node',
+                    plotindex : 0,
+                    nodeindex : aLabels[l].nodes[1]
+                });
+            }
+
+            var oLabel = aLabels.data;
+            oLabel['padding'] = 5;
+            oLabel['x'] = oNodeStart.x - 2;
+            oLabel['y'] = oPlotArea.y - 35;
+            oLabel['width'] = oNodeEnd.x + oNodeEnd.width - oNodeStart.x + 4;
+            oLabel['height'] = 20;
+            oLabel['font-size'] = Math.round(8 + Math.min(8, oLabel['width']/20));        
+            aLabelsData.push(oLabel);
+    
+            var oGroup = {};
+            oGroup['border-top'] = '1px solid #666';
+            oGroup['border-right'] = '1px solid #666';
+            oGroup['border-left'] = '1px solid #666';
+            oGroup['x'] = oNodeStart.x - 2;
+            oGroup['y'] = oPlotArea.y - 12;
+            oGroup['width'] = oNodeEnd.x + oNodeEnd.width - oNodeStart.x + 4;
+            oGroup['height'] = 8;
+            aLabelsData.push(oGroup);
+
+            zingchart.exec('chart', 'addobject', {
+                type : 'label',
+                data : aLabelsData
+            });
+        }
+
+        
+       
     }; // END Drawcharts
 }]);
