@@ -219,6 +219,21 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             ],
             "utc" : true,
             "timezone": 2,
+            "plotarea":{
+                "margin-bottom":75,
+                "margin-top":40,
+                "height":"100%"
+            },
+            "data-tooltips-1":[],
+            "data-tooltips-2":[],
+            "data-tooltips-3":[],
+            "data-tooltips-4":[],
+            "layout":{
+                "layout":"1x2"
+            },
+            "tooltip":{
+                "visible":true
+            },
             "labels": [
                 {
                     "id": 'zoom-out-to-start',
@@ -266,6 +281,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     "visible": true 
                 }
             },
+            "hover-state":{
+                "shadow":true,
+                "shadow-distance":"3px"
+            },
+            "exact":1,
+            "max-trackers":999,
+            "offset-values":[],
+            "options":{
+                "tooltip-box":{
+                    "text-align":""
+                }
+            },
+            "stacked":true,
             "scaleX": {
                 "guide":{
                     "visible": true
@@ -326,17 +354,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             }
           });
 
-          zingchart.render({ 
-            id: 'chart',
-            data: $scope.obj,
-            events : {
-              complete : function() {
-                 createGroups();
-              }
-            }
-        });
-
-        function createGroups(){
+      function createGroups(){
         
             var oPlotArea = zingchart.exec('chart', 'getobjectinfo', {
                 object : 'plotarea'
@@ -398,7 +416,16 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             });
         }
 
-        
+
+        zingchart.render({ 
+            id: 'chart',
+            data: $scope.obj,
+            events : {
+              complete : function() {
+                 createGroups();
+              }
+            }
+        });   
        
     }; // END Drawcharts
 }]);
