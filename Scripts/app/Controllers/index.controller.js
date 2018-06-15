@@ -71,11 +71,13 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         $scope.label = categorieName[0].name.toLowerCase();
         data = "VALUELIST";
         
+        var encounter = valuehistory[data].map(function(e){return e.ENCOUNTERID});
         var labels = valuehistory[data].map(function(e){return e.DATE});
         var data = valuehistory[data].map(function(e){return e.VALUE});
-
+        
         labels = labels.reverse();
         data = data.reverse();
+        encounter = encounter.reverse();
 
         var jour = new Array();
         var mois = new Array();
@@ -88,6 +90,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         }
 
         var compt = 1;
+        var tab = [0];
 
         for(var x=0; x<= labels.length-1; x++){ // Séparation des séjours
             var sous = jour[x+1] - jour[x];
@@ -125,11 +128,13 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             }
             if(data[x] !== null){
                 data[x] = parseInt(data[x]);
+                tab[x] = x;
+
             }
         }
 
-        labels.splice(5,0,"13-09-2016");
-        data.splice(5,0,45);
+        console.log(tab);
+        console.log(data);
 
         for(var x=0 ; x <= labels.length-1; x++){
             jour[x] = parseInt(labels[x].substring(0,2),10);
@@ -144,93 +149,112 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         for(var x=0 ; x<= labels.length-1;x++){
             labels[x] = Date.parse(labels[x]);
         }
-        console.log(labels);
-        console.log(data);
+
+
+        var lg = labels.length-1;
 
         $scope.obj = { // Paramètre du graphique
-            type: "line",
-            series: [
+            "type": "line",
+            "series": [
                 { "values": data,
                   "text" : label
                 }      
             ],
-            plot: {
-                animation: {
-                    sequence: "ANIMATION_BY_NODE"
-                }
+            "utc" : true,
+            "timezone": 2,
+            "plot": {
+                "aspect": "segmented",
+                "exact":true,
+                "smart-sampling":true
             },
-            labels: [
+            "labels": [
                 {
-                    id: 'zoom-out-to-start',
-                    text: 'Réinitialiser Zoom',
-                    backgroundColor:'#c3c3c3',
-                    x: '100%',
-                    y:5,
-                    offsetX: -120,
-                    padding:10,
-                    cursor: 'pointer',
-                    visible: false, // hide label by default
-                    flat:false, // makes label clickable
-                    borderRadius: 5,
-                    hoverState: {
-                      fontColor: '#424242',
-                      border: '1px solid black'
+                    "id": 'zoom-out-to-start',
+                    "text": 'Réinitialiser Zoom',
+                    "backgroundColor":'#c3c3c3',
+                    "x": '100%',
+                    "y":5,
+                    "offsetX": -120,
+                    "padding":10,
+                    "cursor": 'pointer',
+                    "visible": false, 
+                    "flat":false, 
+                    "borderRadius": 5,
+                    "hoverState": {
+                      "fontColor": '#424242',
+                      "border": '1px solid black'
                 }
             }],
-            crosshairX:{
-                lineColor: "#565656",
-                lineStyle: "dashed",
-                lineWidth: 2,
-                alpha : 0.5,
-                plotLabel:{
-                backgroundColor : "#ffffff",
-                borderColor : "#d2d2d2",
-                borderRadius : "5px",
-                bold : true,
-                fontSize : "12px",
-                fontColor : "#111",
-                shadow : true,
-                shadowDistance : 2,
-                shadowAlpha : 0.4
+            "crosshairX":{
+                "lineColor": "#565656",
+                "lineStyle": "dashed",
+                "lineWidth": 2,
+                "alpha" : 0.5,
+                "plotLabel":{
+                "backgroundColor" : "#ffffff",
+                "borderColor" : "#d2d2d2",
+                "borderRadius" : "5px",
+                "bold" : true,
+                "fontSize" : "12px",
+                "fontColor" : "#111",
+                "shadow" : true,
+                "shadowDistance" : 2,
+                "shadowAlpha" : 0.4
             },
-            scaleLabel:{ 
-                bold : true,
-                backgroundColor : "#787878",
-                borderRadius : 3,
-                fontColor : "#eaeaea",
-                fontSize : "12px",
-                callout : true,
-                paddingTop : 2
+            "scaleLabel":{ 
+                "bold" : true,
+                "backgroundColor" : "#787878",
+                "borderRadius" : 3,
+                "fontColor" : "#eaeaea",
+                "fontSize" : "12px",
+                "callout" : true,
+                "paddingTop" : 2
                 },
-                marker:{
-                    visible: true 
+                "marker":{
+                    "visible": true 
                 }
             },
-            id:"chart",
-            scaleX: {
-                guide:{
-                    visible: true
+            "id":"chart",
+            "scaleX": {
+                "max-items": lg,
+                "item-overlap": true,
+                "markers":{
+                    "type": 'line',
+                    'value-range' : true,
+                    'range': null
                 },
-                zooming: true,
-                label: {
-                    text: 'Temps'
+                "guide":{
+                    "visible": true
                 },
-                values: labels,
-                item: {
-                    visible: true
+                "zooming": true,
+                "label": {
+                    "text": 'Temps',
+                    "padding-top": "20px",
+                    "width": "20px"
+                },
+                "values": labels,
+                "tick":{
+                    "placement": "cross",
+                    "size": 12,
+                },
+                "item": {
+                    "font-angle": -15             
                 },
                 "items-overlap": true,
-                step: 'day',
-                transform:{
-                    step: 'day',
-                    type: "date",
-                    all: "%d-%m-%Y"
+                "transform":{
+                    "step": 'day',
+                    "type": "date",
+                    "all": "%d-%m-%Y"
                 }
             },
-            scaleY: {
-                zooming: true,
-                label: {
-                    text: label
+            "scaleY": {
+                "tick":{
+                    "placement": "cross",
+                    "size": 12
+                },
+                "zooming": true,
+                "label": {
+                    "text": label
                 }
             },
         };
