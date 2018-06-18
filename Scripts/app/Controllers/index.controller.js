@@ -10,8 +10,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        url : "ahn_getPatientWeight"
-        //url : "weight.json"
+        //url : "ahn_getPatientWeight"
+        url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
@@ -31,7 +31,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
-                        
                         if( oRequest.status == 200) {
                             $scope.$apply(function () {                     
                                 valuehistory = JSON.parse(oRequest.responseText).VALUEHISTORY;
@@ -49,7 +48,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                             $http.get(url)
                                 .then(function(data) {
                                     valuehistory = data.VALUEHISTORY;
-                                   
                                     DrawCharts();
                                     $scope.error = false;
                                     $scope.loader = false;
@@ -95,152 +93,52 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
 
         var compt = 1;
         var tab = [0];
-        var a=0;
+        var a = 0;
 
         for(var x=0; x<= labels.length-1; x++){ // Séparation des séjours
             if(encounter[x] == encounter[x+1]){
                 var sous = jour[x+1] - jour[x];
                 if(sous < param && sous > 1){
                     for(var y=1; y<sous;y++){
-                        var add = String(jour[x]+y);
-                        if(parseInt(add,10)<10){
-                            if(mois[x]<10){
-                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }
-                            else{
-                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }else{
-                            if(mois[x]<10){
-                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }else{
-                                var string = add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }
-                        if(annee[x+1] - annee[x] > 0 ){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(mois[x+1] - mois[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(jour[x+1] - jour[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                        compt++; a++; 
                     } 
                 }
                 else if(sous < 0){
                     for(var y = 1; y <= 2; y++){
-                        var add = String(jour[x]+y);
-                        if(parseInt(add,10)<10){
-                            if(mois[x]<10){
-                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }
-                            else{
-                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }else{
-                            if(mois[x]<10){
-                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }else{
-                                var string = add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }
-                        if(annee[x+1] - annee[x] > 0 ){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(mois[x+1] - mois[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(jour[x+1] - jour[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                        compt++; a++;
                     }
                 }
                 else if(sous > param){
                     for(var y = 1; y <= 2; y++){
-                        var add = String(jour[x]+y);
-                        if(parseInt(add,10)<10){
-                            if(mois[x]<10){
-                                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }
-                            else{
-                                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }else{
-                            if(mois[x]<10){
-                                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
-                            }else{
-                                var string = add + "-" + mois[x] + "-" + annee[x];
-                            }
-                        }
-                        if(annee[x+1] - annee[x] > 0 ){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(mois[x+1] - mois[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
-                        else if(jour[x+1] - jour[x] > 0){
-                            labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,0);
-                            encounter.splice(x+compt,0,encounter[x+1]);
-                            compt++;
-                        }
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                        compt++; a++;
                     }
-                }
-            }
-            else{
-                if(data[x] == null){
-                    encounter[x] = encounter[x+1];
-                    tab[a] = x; a++;
-                    data[x] = 0;
                 }
             }
             if(data[x] !== null){
                 data[x] = parseInt(data[x]);
             }
         }
+        
+        console.log(tab);
 
         $scope.obj = { // Paramètre du graphique
-            "type": "mixed",
+            "type": "scatter",
             "series": [
                 { 
-                    "type": 'scatter',
                     "values": data,
                     "text" : label,
-                    "scales": "scaleX,scaleY",
-                    "utc" : true,
-                    "timezone": 2,
-                    "plotarea":{
-                        "margin-bottom":75,
-                        "margin-top":40,
-                        "height":"100%"
-                    }
                 }  
             ],
+            "utc" : true,
+            "timezone": 2,
+            "plotarea":{
+                "margin-bottom":75,
+                "margin-top":40,
+                "height":"100%"
+            },
             "labels": [
                 {
                     "id": 'zoom-out-to-start',
@@ -298,7 +196,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     "text-align":""
                 }
             },
-            "scaleX": {
+            "scale-x": {
                 "guide":{
                     "visible": true
                 },
@@ -321,13 +219,15 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     {
                         "type": 'line',
                         "range": tab,
-                        "lineColor": "red",
+                        "lineColor": 'red',
                         "lineWidth": 2,
-                        "alpha": 1
+                        "lineStyle": 'solid',
+                        "alpha": 1,
+                        "visible": true
                     }
                 ]
             },
-            "scaleY": {
+            "scale-y": {
                 "tick":{
                     "placement": "cross",
                     "size": 12
@@ -365,4 +265,38 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
           });
        
     }; // END Drawcharts
+
+    function Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a){
+        var add = String(jour[x]+y);
+        if(parseInt(add,10)<10){
+            if(mois[x]<10){
+                var string = "0"+add + "-" + "0"+mois[x] + "-" + annee[x];
+            }
+            else{
+                var string = "0"+add + "-" + mois[x] + "-" + annee[x];
+            }
+        }else{
+            if(mois[x]<10){
+                var string = add + "-" + "0"+mois[x] + "-" + annee[x];
+            }else{
+                var string = add + "-" + mois[x] + "-" + annee[x];
+            }
+        }
+        if(annee[x+1] - annee[x] > 0 ){
+            Splice(labels,x,compt,data,encounter,tab,string,a); 
+        }
+        else if(mois[x+1] - mois[x] > 0){
+            Splice(labels,x,compt,data,encounter,tab,string,a);
+        }
+        else if(jour[x+1] - jour[x] > 0){
+            Splice(labels,x,compt,data,encounter,tab,string,a);
+        }      
+    }; // END Insertion
+
+    function Splice(labels, x,compt,data,encounter,tab,string,a){     
+        labels.splice(x+compt,0,string);
+        data.splice(x+compt,0,0);
+        encounter.splice(x+compt,0,encounter[x+1]);
+        tab[a] = x+compt;
+    }; // END Splice
 }]);
