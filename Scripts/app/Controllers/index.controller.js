@@ -10,8 +10,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        //url : "ahn_getPatientWeight"
-        url : "weight.json"
+        url : "ahn_getPatientWeight"
+        //url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
@@ -31,6 +31,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
+                        
                         if( oRequest.status == 200) {
                             $scope.$apply(function () {                     
                                 valuehistory = JSON.parse(oRequest.responseText).VALUEHISTORY;
@@ -48,6 +49,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                             $http.get(url)
                                 .then(function(data) {
                                     valuehistory = data.VALUEHISTORY;
+                                   
                                     DrawCharts();
                                     $scope.error = false;
                                     $scope.loader = false;
@@ -117,19 +119,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         }
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
@@ -154,19 +156,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         }
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
@@ -191,19 +193,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         }
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
-                            data.splice(x+compt,0,null);
+                            data.splice(x+compt,0,0);
                             encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
