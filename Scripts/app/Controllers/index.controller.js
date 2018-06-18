@@ -10,8 +10,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        //url : "ahn_getPatientWeight"
-        url : "weight.json"
+        url : "ahn_getPatientWeight"
+        // url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
