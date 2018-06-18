@@ -92,6 +92,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         }
 
         var compt = 1;
+        var tab = [0];
+        var a=0;
 
         for(var x=0; x<= labels.length-1; x++){ // Séparation des séjours
             if(encounter[x] == encounter[x+1]){
@@ -116,16 +118,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                     } 
@@ -150,16 +155,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                     }
@@ -184,19 +192,29 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                         if(annee[x+1] - annee[x] > 0 ){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(mois[x+1] - mois[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                         else if(jour[x+1] - jour[x] > 0){
                             labels.splice(x+compt,0,string);
                             data.splice(x+compt,0,null);
+                            encounter.splice(x+compt,0,encounter[x+1]);
                             compt++;
                         }
                     }
+                }
+            }
+            else{
+                if(data[x] == null){
+                    encounter[x] = encounter[x+1];
+                    tab[a] = x; a++;
+                    data[x] = 0;
                 }
             }
             if(data[x] !== null){
@@ -204,36 +222,23 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             }
         }
 
-        for(var x=0 ; x <= labels.length-1; x++){
-            jour[x] = parseInt(labels[x].substring(0,2),10);
-            mois[x] = parseInt(labels[x].substring(3,5),10);
-            annee[x] = parseInt(labels[x].substring(6,10),10);
-        }
-
         $scope.obj = { // Paramètre du graphique
-            "type": "scatter",
+            "type": "mixed",
             "series": [
-                { "values": data,
-                  "text" : label
-                }      
+                { 
+                    "type": 'scatter',
+                    "values": data,
+                    "text" : label,
+                    "scales": "scaleX,scaleY",
+                    "utc" : true,
+                    "timezone": 2,
+                    "plotarea":{
+                        "margin-bottom":75,
+                        "margin-top":40,
+                        "height":"100%"
+                    }
+                }  
             ],
-            "utc" : true,
-            "timezone": 2,
-            "plotarea":{
-                "margin-bottom":75,
-                "margin-top":40,
-                "height":"100%"
-            },
-            "data-tooltips-1":[],
-            "data-tooltips-2":[],
-            "data-tooltips-3":[],
-            "data-tooltips-4":[],
-            "layout":{
-                "layout":"1x2"
-            },
-            "tooltip":{
-                "visible":true
-            },
             "labels": [
                 {
                     "id": 'zoom-out-to-start',
@@ -286,14 +291,11 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 "shadow-distance":"3px"
             },
             "exact":1,
-            "max-trackers":999,
-            "offset-values":[],
             "options":{
                 "tooltip-box":{
                     "text-align":""
                 }
             },
-            "stacked":true,
             "scaleX": {
                 "guide":{
                     "visible": true
@@ -309,13 +311,19 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     "placement": "cross",
                     "size": 12,
                 },
-                "item": {
-                    "font-angle": -15             
-                },
                 "transform":{
                     "type": "date",
                     "all": "%d-%m-%Y"
-                }
+                },
+                "markers":[
+                    {
+                        "type": 'line',
+                        "range": tab,
+                        "lineColor": "red",
+                        "lineWidth": 2,
+                        "alpha": 1
+                    }
+                ]
             },
             "scaleY": {
                 "tick":{
@@ -324,7 +332,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 },
                 "zooming": true,
                 "label": {
-                    "text": label
+                    "text": label,
                 }
             }
         };
@@ -340,7 +348,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 type: 'label',
                 data: {
                   id: 'zoom-out-to-start',
-                  visible: true
+                  visible: false
                 }
               });
             } else {
