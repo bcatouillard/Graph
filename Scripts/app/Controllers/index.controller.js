@@ -10,8 +10,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        url : "ahn_getPatientWeight"
-        // url : "weight.json"
+        // url : "ahn_getPatientWeight"
+        url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
@@ -27,7 +27,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             url = url[0].url;
 
             var oRequest = new XMLHttpRequest();
-            var oRequest = new XMLCclRequest();
+            // var oRequest = new XMLCclRequest();
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
@@ -121,8 +121,26 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 data[x] = parseInt(data[x]);
             }
         }
-        
-        console.log(tab);
+
+        var tabMarkers = [];
+        var z = 0;
+
+        tab.forEach(function(e){
+            tabMarker = {
+                "type": 'line',
+                "range": [e],
+                "lineColor": 'red',
+                "lineWidth": 2,
+                "lineStyle": 'solid',
+                "alpha": 1,
+                "visible": true
+
+            };
+            tabMarkers[z] = tabMarker;
+            z++;
+        });
+       
+        console.log(tabMarkers);
 
         $scope.obj = { // Paramètre du graphique
             "type": "scatter",
@@ -215,17 +233,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                     "type": "date",
                     "all": "%d-%m-%Y"
                 },
-                "markers":[
-                    {
-                        "type": 'line',
-                        "range": tab,
-                        "lineColor": 'red',
-                        "lineWidth": 2,
-                        "lineStyle": 'solid',
-                        "alpha": 1,
-                        "visible": true
-                    }
-                ]
+                "markers": tabMarkers
             },
             "scale-y": {
                 "tick":{
