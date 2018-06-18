@@ -10,8 +10,8 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
     $scope.Categorie = [{
         id : 1,
         name : 'Poids',
-        url : "ahn_getPatientWeight"
-        // url : "weight.json"
+        // url : "ahn_getPatientWeight"
+        url : "weight.json"
     },{
         id : 2,
         name : 'Tension',
@@ -27,7 +27,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             url = url[0].url;
 
             var oRequest = new XMLHttpRequest();
-            var oRequest = new XMLCclRequest();
+            // var oRequest = new XMLCclRequest();
             
             oRequest.onreadystatechange = function () {
                     if (oRequest.readyState == 4 ){
@@ -85,11 +85,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
         var mois = new Array();
         var annee = new Array();
 
-        for(var x=0 ; x <= labels.length-1; x++){
-            jour[x] = parseInt(labels[x].substring(0,2),10);
-            mois[x] = parseInt(labels[x].substring(3,5),10);
-            annee[x] = parseInt(labels[x].substring(6,10),10);
-        }
+        Journee(labels,jour,mois,annee);
 
         var compt = 1;
         var tab = [0];
@@ -100,19 +96,22 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 var sous = jour[x+1] - jour[x];
                 if(sous < param && sous > 1){
                     for(var y=1; y<sous;y++){
-                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                        var value = null;
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a,value,param);
                         compt++; a++; 
                     } 
                 }
                 else if(sous < 0){
-                    for(var y = 1; y <= 2; y++){
-                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                    for(var y = 1; y <= 3; y++){
+                        var value = null;
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a,value,param);
                         compt++; a++;
                     }
                 }
                 else if(sous > param){
-                    for(var y = 1; y <= 2; y++){
-                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a);
+                    for(var y = 1; y <= 3; y++){
+                        var value = null;
+                        Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a,value,param);
                         compt++; a++;
                     }
                 }
@@ -120,7 +119,23 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             if(data[x] !== null){
                 data[x] = parseInt(data[x]);
             }
+        }    
+
+        Journee(labels,jour,mois,annee);
+
+        var z=0;
+        for(var x=0; x<=tab.length-1;x++){
+            if(tab[x+2]-tab[x] == tab[x+1]){
+                tab.splice(x,3);
+            }
+            else if(jour[x+2] - jour[x] <2){
+                tab.splice(x+1,1);
+            }
+            // else if(tab[x+1]-tab[x] == 1 && ){
+            //     tab.splice(x,1);
+            // }
         }
+        console.log(tab);
 
         var tabMarkers = [];
         var z = 0;
@@ -140,7 +155,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             z++;
         });
        
-        console.log(tabMarkers);
+        console.log(labels);
 
         $scope.obj = { // Paramètre du graphique
             "type": "scatter",
@@ -236,6 +251,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
                 "markers": tabMarkers
             },
             "scale-y": {
+                "values" : "0:200:20",
                 "tick":{
                     "placement": "cross",
                     "size": 12
@@ -274,7 +290,7 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
        
     }; // END Drawcharts
 
-    function Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a){
+    function Insertion(jour,x,y,mois,annee,labels,data,encounter,tab,compt,a,value,param){
         var add = String(jour[x]+y);
         if(parseInt(add,10)<10){
             if(mois[x]<10){
@@ -291,20 +307,29 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             }
         }
         if(annee[x+1] - annee[x] > 0 ){
-            Splice(labels,x,compt,data,encounter,tab,string,a); 
+            Splice(labels,x,compt,data,encounter,tab,string,a,value,jour,param); 
         }
         else if(mois[x+1] - mois[x] > 0){
-            Splice(labels,x,compt,data,encounter,tab,string,a);
+            Splice(labels,x,compt,data,encounter,tab,string,a,value,jour,param);
         }
         else if(jour[x+1] - jour[x] > 0){
-            Splice(labels,x,compt,data,encounter,tab,string,a);
+            Splice(labels,x,compt,data,encounter,tab,string,a,value,jour,param);
         }      
     }; // END Insertion
 
-    function Splice(labels, x,compt,data,encounter,tab,string,a){     
+    function Splice(labels, x,compt,data,encounter,tab,string,a,value,jour,param){     
         labels.splice(x+compt,0,string);
-        data.splice(x+compt,0,0);
+        data.splice(x+compt,0,value);
         encounter.splice(x+compt,0,encounter[x+1]);
         tab[a] = x+compt;
     }; // END Splice
+
+    function Journee(labels,jour,mois,annee){
+        for(var x=0 ; x <= labels.length-1; x++){
+            jour[x] = parseInt(labels[x].substring(0,2),10);
+            mois[x] = parseInt(labels[x].substring(3,5),10);
+            annee[x] = parseInt(labels[x].substring(6,10),10);
+        }
+    }; // END Journee
+    
 }]);
