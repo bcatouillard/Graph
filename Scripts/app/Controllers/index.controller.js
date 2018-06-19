@@ -123,19 +123,22 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
 
         Journee(labels,jour,mois,annee);
 
-        var z=0;
+
         for(var x=0; x<=tab.length-1;x++){
-            if(tab[x+2]-tab[x] == tab[x+1]){
-                tab.splice(x,3);
+            for(var y=0; y<=labels.length-1;y++){    
+                if(tab[x+2]-tab[x] == tab[x+1]){
+                    tab.splice(x,3);
+                }
+                else if(tab[x]+1 == tab[x+1]){
+                    tab.splice(x,1);tab.splice(x+1,1);
+                }
+                else if(jour[tab[x]] - jour[y] == 1 && data[y] !== null){
+                        if(tab[x+1] - tab[x] >1){
+                            tab.splice(x,1);
+                        }
+                }
             }
-            else if(jour[x+2] - jour[x] <2){
-                tab.splice(x+1,1);
-            }
-            // else if(tab[x+1]-tab[x] == 1 && ){
-            //     tab.splice(x,1);
-            // }
         }
-        console.log(tab);
 
         var tabMarkers = [];
         var z = 0;
@@ -154,8 +157,6 @@ angular.module('app').controller('IndexController', ['$scope','$filter', '$route
             tabMarkers[z] = tabMarker;
             z++;
         });
-       
-        console.log(labels);
 
         $scope.obj = { // Paramètre du graphique
             "type": "scatter",
